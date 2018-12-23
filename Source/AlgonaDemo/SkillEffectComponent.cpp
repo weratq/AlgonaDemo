@@ -18,7 +18,7 @@ USkillEffectComponent::USkillEffectComponent()
 void USkillEffectComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
+GetOwner()->GetWorldTimerManager().SetTimer(MainDotTimer, this, &USkillEffectComponent::Dot, 0.1, true,0.1);
 	// ...
 
 }
@@ -28,20 +28,52 @@ void USkillEffectComponent::BeginPlay()
 void USkillEffectComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+	
 	// ...
 }
 
-float USkillEffectComponent::Dot(float tick, float TimeRemaiting) {
+void USkillEffectComponent::Dot(void) {
 	
-	UE_LOG(LogTemp, Warning, TEXT("hkfd"));
-	return 12.f;
+
+	if (DotOn.IsValidIndex(0))
+	{
+		float TotalDamageInTick = 0;
+
+		for (int i = 0; i < DotOn.Num(); i++) {
+
+			if (DotOn[i].TimeLeftToNextTick <= 0) {
+				TotalDamageInTick += DotOn[i].Damage * DotOn[i].StackCount;
+				DotOn[i].TimeLeftToNextTick += DotOn[i].TickTime;
+				DotOn[i].TimeRemaiting -= 0.1f;
+				
+			}
+			else
+			{
+				DotOn[i].TimeRemaiting -= 0.1f;
+				DotOn[i].TimeLeftToNextTick -= 0.1f;
+				
+			}
+			if (DotOn[i].TimeRemaiting <= 0) {
+				DotOn.RemoveAt(i);
+				OnChangeDotArr.Broadcast();
+			}
+
+		}
+		
+		ReturnDamage(TotalDamageInTick);
+	}
+	
+	
 
 }
 
-void USkillEffectComponent::ReturnDamage(void) {
-	return;
+float USkillEffectComponent::ReturnDamage(float Damage) {
 
+	FDamageEvent DamageEvent;
+	GetOwner()->TakeDamage(Damage,DamageEvent , nullptr, nullptr);
+	return Damage;
+
+	
 }
 
 void USkillEffectComponent::AddDot(FDotTickEffect DotToAdd) {
@@ -53,7 +85,7 @@ void USkillEffectComponent::AddDot(FDotTickEffect DotToAdd) {
 
 			if (DotOn[i].id == DotToAdd.id){
 
-			// стакаеться ли эфект?
+			
 				if (DotToAdd.IsStack) {
 			//если можно стакать то добавлям +1 стак
 					if (DotOn[i].MaxStackCount > DotOn[i].StackCount) {
@@ -75,7 +107,7 @@ void USkillEffectComponent::AddDot(FDotTickEffect DotToAdd) {
 		OnChangeDotArr.Broadcast();
 		return;
 	}
-	//UE_LOG(LogTmp, Warning, TEXT("Invalid dot Effect!!!"));
+
 }
 
 

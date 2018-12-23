@@ -28,7 +28,8 @@ USTRUCT(BlueprintType)
 			int MaxStackCount = 1;
 		UPROPERTY(EditAnywhere, BlueprintReadWrite)
 			float MaxTimeDuration = 0.f;
-
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
+			float TimeLeftToNextTick = 0.f;
 	};
 /**
  * 

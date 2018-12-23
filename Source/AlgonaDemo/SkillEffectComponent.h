@@ -10,6 +10,7 @@
 #include "SkillEffectComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FChangeDotArr);
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTickDamage,float);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ALGONADEMO_API USkillEffectComponent : public UActorComponent
@@ -28,18 +29,22 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	UFUNCTION(BlueprintCallable)
-	float Dot(float tick, float TimeRemaiting);
+	void Dot();
 	UFUNCTION(BlueprintCallable)
-	void ReturnDamage();
+	float ReturnDamage(float Damage);
 
 	UFUNCTION(BlueprintCallable)
 	void AddDot( FDotTickEffect DotToAdd );
 	UFUNCTION(BlueprintCallable)
 	void RefreshDot(int IndexInDotOn);
 
+	FTimerHandle MainDotTimer;
+
 
 	UPROPERTY(BlueprintAssignable)
 		FChangeDotArr OnChangeDotArr;
+	//UPROPERTY(BlueprintAssignable)
+		//FTickDamage TickDamage;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	TArray <FDotTickEffect> DotOn;

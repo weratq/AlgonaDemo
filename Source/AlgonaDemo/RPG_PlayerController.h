@@ -35,6 +35,9 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void CD_Tick();
 
+	ARPG_PlayerController(const FObjectInitializer & ObjectInitializer = FObjectInitializer::Get());
+	virtual void GetLifetimeReplicatedProps(TArray< FLifetimeProperty > & OutLifetimeProps) const override;
+
 	FTimerHandle CD_Timer;
 
 public:
@@ -42,9 +45,9 @@ public:
 	TArray<FSkillCoolDown> SkillsOnCD;
 	UFUNCTION(BlueprintCallable)
 		void AddSkillOnCD(FSkillCoolDown SkillOnCoolDown);
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite,Replicated)
 		float TestRep = 0.f;
-
+	
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 		bool CheckIsOnCD(int IDSpellBook);
 };

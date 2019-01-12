@@ -5,8 +5,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "Engine/Public/TimerManager.h"
+#include "Engine/World.h"
 #include "RPG_PlayerController.generated.h"
 
+//Client side for widgets
 USTRUCT(BlueprintType)
 struct FSkillCoolDown
 {
@@ -19,6 +21,21 @@ struct FSkillCoolDown
 		float CurrCoolDown = 0.f;
 
 };
+//Server side changed only when sombody ask
+USTRUCT()
+struct FServerSkillCD
+{
+	GENERATED_BODY()
+	UPROPERTY()
+		int id = -1;
+	UPROPERTY()
+		float CDDuration = 0.f;
+	UPROPERTY()
+		float StartTimeInSec = 0.f;
+
+};
+
+
 
 /**
  * 
@@ -27,24 +44,42 @@ UCLASS()
 class ALGONADEMO_API ARPG_PlayerController : public APlayerController
 {
 	GENERATED_BODY()
+public:
+	ARPG_PlayerController();
 	
-	
+	virtual void GetLifetimeReplicatedProps(TArray< FLifetimeProperty > & OutLifetimeProps) const override;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-	UFUNCTION(BlueprintCallable)
-	void CD_Tick();
 
-	FTimerHandle CD_Timer;
+	
 
 public:
 	UPROPERTY(BlueprintReadWrite)
 	TArray<FSkillCoolDown> SkillsOnCD;
+
 	UFUNCTION(BlueprintCallable)
 		void AddSkillOnCD(FSkillCoolDown SkillOnCoolDown);
 	UPROPERTY(BlueprintReadWrite)
 		float TestRep = 0.f;
 
+	
+UFUNCTION(BlueprintCallable)
+	void CD_TickClient();
+
+	FTimerHandle CD_Timer;
+	// server functions 
+	UFUNCTION(BlueprintCallable)
+		void RepFunction();
+	TArray<FServerSkillCD> TServerSkillsCD;
+	UFUNCTION(Server, Reliable, WithValidation)
+		void Server_AddSkillOnCD(FServerSkillCD SkillToAdd);
+
+		FServerSkillCD ConvertToServerSt(FSkillCoolDown InputCD);
+		//return true if not on CD
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 		bool CheckIsOnCD(int IDSpellBook);
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetSpellCD_Left(int IDSpellBook);
+
 };

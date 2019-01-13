@@ -8,7 +8,8 @@ AMyBaseCharacter::AMyBaseCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	AbilitySystemComp = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
+	CharAttribute = CreateDefaultSubobject<UAttributeSetBasic>("CharAttibut");
 }
 
 // Called when the game starts or when spawned
@@ -40,4 +41,15 @@ void AMyBaseCharacter::DotTimer(float tick, float TimeRemaiting) {
 
 void AMyBaseCharacter::Test(void) {
 
+}
+
+void AMyBaseCharacter::AddAbility(TSubclassOf<UGameplayAbility> AbilityToAdd)
+{
+	if (AbilitySystemComp) {
+		if (HasAuthority() && AbilityToAdd)
+		{
+			AbilitySystemComp->GiveAbility(FGameplayAbilitySpec(AbilityToAdd, 1, 0));
+		}
+		AbilitySystemComp->InitAbilityActorInfo(this, this);
+	}
 }

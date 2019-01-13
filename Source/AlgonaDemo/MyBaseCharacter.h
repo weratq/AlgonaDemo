@@ -5,15 +5,17 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Engine/World.h"
+#include "AbilitySystemInterface.h"
+#include "AbilitySystemComponent.h"
 #include "Engine/Public/TimerManager.h"
+#include "AttributeSetBasic.h"
 #include "MyBaseCharacter.generated.h"
 
-	
+//class UAttributeSetBasic;
 
 UCLASS()
-class ALGONADEMO_API AMyBaseCharacter : public ACharacter
-{
-	GENERATED_BODY()
+class ALGONADEMO_API AMyBaseCharacter : public ACharacter//, public IAbilitySystemInterface
+{	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
@@ -33,7 +35,12 @@ public:
 	void DotTimer(float tick, float TimeRemaiting);
 
 	void Test(void);
-
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite,Category = "Ability")
+		UAbilitySystemComponent* AbilitySystemComp = nullptr;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Ability")
+		UAttributeSetBasic* CharAttribute = nullptr;
+	UFUNCTION(BlueprintCallable,Category = "CharAbility")
+		void AddAbility(TSubclassOf<UGameplayAbility> AbilityToAdd);
 
 };
 	

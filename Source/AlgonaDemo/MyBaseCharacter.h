@@ -14,7 +14,7 @@
 //class UAttributeSetBasic;
 
 UCLASS()
-class ALGONADEMO_API AMyBaseCharacter : public ACharacter//, public IAbilitySystemInterface
+class ALGONADEMO_API AMyBaseCharacter : public ACharacter, public IAbilitySystemInterface
 {	GENERATED_BODY()
 
 public:
@@ -41,6 +41,6 @@ public:
 		UAttributeSetBasic* CharAttribute = nullptr;
 	UFUNCTION(BlueprintCallable,Category = "CharAbility")
 		void AddAbility(TSubclassOf<UGameplayAbility> AbilityToAdd);
-
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 };
 	

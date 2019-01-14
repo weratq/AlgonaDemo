@@ -53,3 +53,8 @@ void AMyBaseCharacter::AddAbility(TSubclassOf<UGameplayAbility> AbilityToAdd)
 		AbilitySystemComp->InitAbilityActorInfo(this, this);
 	}
 }
+
+UAbilitySystemComponent * AMyBaseCharacter::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComp;
+}

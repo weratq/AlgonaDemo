@@ -42,5 +42,22 @@ public:
 	UFUNCTION(BlueprintCallable,Category = "CharAbility")
 		void AddAbility(TSubclassOf<UGameplayAbility> AbilityToAdd);
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
+
+	UFUNCTION()
+		void OnHelthChanged(float Health, float MaxHealth);
+
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "OnHealthChange"))
+		void BP_OnHelthChange(float Health, float MaxHealth);
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "OnDie"))
+		void BP_OnDie();
+	UFUNCTION(BlueprintCallable,BlueprintPure, Category = "CharBase")
+		bool IsInOtherTeam(AMyBaseCharacter* OtherChar);
+	UFUNCTION(BlueprintCallable, Category = "CharBase")
+		void CharDie();
+
+protected:
+	bool bIsDie = false;
+	uint8 TeamID;
+	void AutoDeterminTeamIDByContRollerType();
+
 };
-	

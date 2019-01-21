@@ -7,7 +7,10 @@
 
 UAttributeSetBasic::UAttributeSetBasic()
 	: MaxHealth(100.f),
-	Health (100.f)
+	Health (100.f),
+	Mana(100.f),
+	MaxMana(100.f)
+
 {
 
 }
@@ -17,8 +20,14 @@ void UAttributeSetBasic::PostGameplayEffectExecute(const struct FGameplayEffectM
 	if (Data.EvaluatedData.Attribute.GetUProperty() == FindFieldChecked<UProperty>(UAttributeSetBasic::StaticClass(), GET_MEMBER_NAME_CHECKED(UAttributeSetBasic, Health))) {
 		//UE_LOG(LogTemp, Warning, TEXT("%f"), Health.GetCurrentValue());
 		Health.SetCurrentValue(FMath::Clamp(Health.GetCurrentValue(), 0.f, MaxHealth.GetCurrentValue()));
-		OnHealthChnge_del.Broadcast(Health.GetCurrentValue(), MaxHealth.GetCurrentValue());
+		OnHealthChange_del.Broadcast(Health.GetCurrentValue(), MaxHealth.GetCurrentValue());
 	}
+	if (Data.EvaluatedData.Attribute.GetUProperty() == FindFieldChecked<UProperty>(UAttributeSetBasic::StaticClass(), GET_MEMBER_NAME_CHECKED(UAttributeSetBasic, Mana))) {
+		//UE_LOG(LogTemp, Warning, TEXT("%f"), Health.GetCurrentValue());
+		Mana.SetCurrentValue(FMath::Clamp(Mana.GetCurrentValue(), 0.f, MaxMana.GetCurrentValue()));
+		OnManaChange_del.Broadcast(Mana.GetCurrentValue(), MaxMana.GetCurrentValue());
+	}
+
 
 	
 }

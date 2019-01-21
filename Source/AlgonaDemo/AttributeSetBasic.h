@@ -25,9 +25,13 @@ public:
 	FGameplayAttributeData Health;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
 		FGameplayAttributeData MaxHealth;
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
+		FGameplayAttributeData Mana;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
+		FGameplayAttributeData MaxMana;
 	void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData &Data) override;
 
-	FOnFloatChngeDelegate OnHealthChnge_del;
+	FOnFloatChngeDelegate OnHealthChange_del;
+	FOnFloatChngeDelegate OnManaChange_del;
 
 };

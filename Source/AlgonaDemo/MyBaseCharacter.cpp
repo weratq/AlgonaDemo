@@ -21,7 +21,8 @@ AMyBaseCharacter::AMyBaseCharacter()
 void AMyBaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	CharAttribute->OnHealthChnge_del.AddDynamic(this, &AMyBaseCharacter::OnHelthChanged);
+	CharAttribute->OnHealthChange_del.AddDynamic(this, &AMyBaseCharacter::OnHelthChanged);
+	CharAttribute->OnManaChange_del.AddDynamic(this, &AMyBaseCharacter::OnManaChanged);
 	AutoDeterminTeamIDByContRollerType();
 }
 
@@ -74,6 +75,11 @@ void AMyBaseCharacter::OnHelthChanged(float Health, float MaxHealth)
 		bIsDie = true;
 	}
 	BP_OnHelthChange(Health, MaxHealth);
+}
+
+void AMyBaseCharacter::OnManaChanged(float Mana, float MaxMana)
+{
+	BP_OnManaChange(Mana, MaxMana);
 }
 
 bool AMyBaseCharacter::IsInOtherTeam(AMyBaseCharacter * OtherChar)

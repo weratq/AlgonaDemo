@@ -45,9 +45,14 @@ public:
 
 	UFUNCTION()
 		void OnHelthChanged(float Health, float MaxHealth);
+	UFUNCTION()
+		void OnManaChanged(float Mana, float MaxMana);
 
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "OnHealthChange"))
 		void BP_OnHelthChange(float Health, float MaxHealth);
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "OnManaChange"))
+		void BP_OnManaChange(float Mana, float MaxMana);
+
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "OnDie"))
 		void BP_OnDie();
 	UFUNCTION(BlueprintCallable,BlueprintPure, Category = "CharBase")

@@ -31,6 +31,23 @@ public:
 		FGameplayAttributeData MaxMana;
 	void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData &Data) override;
 
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
+		FGameplayAttributeData Inteligence;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
+		FGameplayAttributeData Strength;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
+		FGameplayAttributeData Agility;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
+		FGameplayAttributeData Spirit;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
+		FGameplayAttributeData Armor;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
+		FGameplayAttributeData CritMelee;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
+		FGameplayAttributeData CritMagic;
+
+
 	FOnFloatChngeDelegate OnHealthChange_del;
 	FOnFloatChngeDelegate OnManaChange_del;
 

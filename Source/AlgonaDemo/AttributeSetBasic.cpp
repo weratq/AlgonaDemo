@@ -29,3 +29,13 @@ void UAttributeSetBasic::PostGameplayEffectExecute(const struct FGameplayEffectM
 	}
 	
 }
+
+void UAttributeSetBasic::ResetAttributs()
+{
+	Health.SetCurrentValue(MaxHealth.GetCurrentValue());
+	Mana.SetCurrentValue(MaxMana.GetCurrentValue()); 
+	OnManaChange_del.Broadcast(Mana.GetCurrentValue(), MaxMana.GetCurrentValue());
+	OnHealthChange_del.Broadcast(Health.GetCurrentValue(), MaxHealth.GetCurrentValue());
+}
+
+

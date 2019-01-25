@@ -20,4 +20,5 @@ public:
 	
 		UFUNCTION(BlueprintCallable, Category = "Abilitybase")
 			FGameplayAbilityInfo GetAbilityInfo();
+		
 };

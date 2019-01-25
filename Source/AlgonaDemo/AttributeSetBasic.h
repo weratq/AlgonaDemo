@@ -47,6 +47,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
 		FGameplayAttributeData CritMagic;
 
+	void ResetAttributs();
 
 	FOnFloatChngeDelegate OnHealthChange_del;
 	FOnFloatChngeDelegate OnManaChange_del;

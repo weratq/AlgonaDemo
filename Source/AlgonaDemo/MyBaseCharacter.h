@@ -59,7 +59,9 @@ public:
 		bool IsInOtherTeam(AMyBaseCharacter* OtherChar);
 	UFUNCTION(BlueprintCallable, Category = "CharBase")
 		void CharDie();
-
+	UFUNCTION(BlueprintCallable, Category = "CharBase")
+		void Restart();
+	FVector StartLocation;
 protected:
 	bool bIsDie = false;
 	uint8 TeamID;

@@ -24,6 +24,7 @@ void AMyBaseCharacter::BeginPlay()
 	CharAttribute->OnHealthChange_del.AddDynamic(this, &AMyBaseCharacter::OnHelthChanged);
 	CharAttribute->OnManaChange_del.AddDynamic(this, &AMyBaseCharacter::OnManaChanged);
 	AutoDeterminTeamIDByContRollerType();
+	StartLocation = GetActorLocation();
 }
 
 // Called every frame
@@ -91,13 +92,19 @@ void AMyBaseCharacter::CharDie()
 {
 	APlayerController* PC = Cast<APlayerController>(GetController());
 	if (PC) {
-		PC->DisableInput(PC);
+		Restart();
 	}
 	AAIController* APC = Cast<AAIController>(GetController());
 	if (APC) {
 		APC->GetBrainComponent()->StopLogic("Death");
 	}
 
+}
+
+void AMyBaseCharacter::Restart()
+{
+	//SetActorLocation(StartLocation, false, nullptr, ETeleportType::ResetPhysics);
+	CharAttribute->ResetAttributs();
 }
 
 void AMyBaseCharacter::AutoDeterminTeamIDByContRollerType()

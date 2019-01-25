@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
+#include "AbilityTabs.h"
 #include "BaseGameplayAbility.generated.h"
 
 /**
@@ -15,7 +16,8 @@ class ALGONADEMO_API UBaseGameplayAbility : public UGameplayAbility
 	GENERATED_BODY()
 public:
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilityBase")
-		UMaterialInstanceDynamic* Icon;
+		UMaterialInstance* UIMaterial;
 	
-	
+		UFUNCTION(BlueprintCallable, Category = "Abilitybase")
+			FGameplayAbilityInfo GetAbilityInfo();
 };

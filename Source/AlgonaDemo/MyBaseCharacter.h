@@ -60,7 +60,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "CharBase")
 		void CharDie();
 	UFUNCTION(BlueprintCallable, Category = "CharBase")
-		void Restart();
+		void Restartg();
 	FVector StartLocation;
 protected:
 	bool bIsDie = false;

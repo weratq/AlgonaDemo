@@ -2,14 +2,38 @@
 
 #include "BaseGameplayAbilityTargetActor.h"
 #include "GameFramework/PlayerController.h"
+#include "GameplayAbility.h"
 #include "Engine/World.h"
+#include "DrawDebugHelpers.h"
+
+ABaseGameplayAbilityTargetActor::ABaseGameplayAbilityTargetActor()
+{
+	PrimaryActorTick.bCanEverTick = true;
+	Decal = CreateDefaultSubobject<UDecalComponent>("GroundDecal");
+	Root = CreateDefaultSubobject<USceneComponent>("Root");
+	SetRootComponent(Root);
+	Decal->SetupAttachment(Root);
+	Radius = 200.f;
+	Decal->DecalSize = FVector(Radius);
+	
+}
+
+void ABaseGameplayAbilityTargetActor::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	FVector LookPoint;
+	GetPlayerLookingPoint(LookPoint);
+	Decal->SetWorldLocation(LookPoint, false, nullptr, ETeleportType::None);
+	//DrawDebugSphere(GetWorld(), LookPoint, Radius, 32, FColor::Red, false, -1, 0, 5.f);
+}
 
 
 
 void ABaseGameplayAbilityTargetActor::StartTargeting(UGameplayAbility* Ability)
 {
 	OwningAbility = Ability;
-	MasterPC = Cast<APlayerController>(Ability->GetOwningActorInfo()->GetInstigatorController());
+	MasterPC = Cast<APlayerController>(Ability->GetOwningActorFromActorInfo()->GetInstigatorController());
+
 }
 
 void ABaseGameplayAbilityTargetActor::ConfirmTargetingAndContinue()
@@ -36,20 +60,32 @@ void ABaseGameplayAbilityTargetActor::ConfirmTargetingAndContinue()
 		QueryParams);
 	if (TryOverlap)
 	{
-		for (int32 i; i < Overlaps.Num(); ++i)
+		for (int i = 0; i < Overlaps.Num(); ++i)
 		{
 			APawn* PawnOverlaped = Cast<APawn>(Overlaps[i].GetActor());
 			if (PawnOverlaped && !OverlapingActors.Contains(PawnOverlaped))
 			{
+			
 				OverlapingActors.Add(PawnOverlaped);
 			}
 
 		}
 	}
-
+	if (OverlapingActors.Num() > 0)
+	{	UE_LOG(LogTemp, Warning, TEXT("ADD"));
+		FGameplayAbilityTargetDataHandle TargetData = StartLocation.MakeTargetDataHandleFromActors(OverlapingActors);
+		TargetDataReadyDelegate.Broadcast(TargetData);
+	}
+	else {
+		TargetDataReadyDelegate.Broadcast(FGameplayAbilityTargetDataHandle());
+	}
 }
 
-bool ABaseGameplayAbilityTargetActor::GetPlayerLookingPoint(OUT FVector& OutViewPoint)
+
+
+
+
+bool ABaseGameplayAbilityTargetActor::GetPlayerLookingPoint(FVector& OutViewPoint)
 {
 	FVector ViewPoint;
 	FRotator ViewRatation;

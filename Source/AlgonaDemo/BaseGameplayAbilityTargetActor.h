@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbilityTargetActor.h"
+#include "Components/DecalComponent.h"
 #include "BaseGameplayAbilityTargetActor.generated.h"
 
 /**
@@ -16,12 +17,17 @@ class ALGONADEMO_API ABaseGameplayAbilityTargetActor : public AGameplayAbilityTa
 	
 	
 public:
+	ABaseGameplayAbilityTargetActor();
 	virtual void StartTargeting(UGameplayAbility* Ability) override;
 	virtual void ConfirmTargetingAndContinue() override;
-
+	virtual void Tick(float DeltaSeconds) override;
 	UFUNCTION(BlueprintCallable, Category = "GroundSelect")
-		bool GetPlayerLookingPoint(OUT FVector& OutViewPoint );
+		bool GetPlayerLookingPoint(FVector& OutViewPoint );
 
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,meta = (ExposeOnSpawn = true))
 		float Radius;
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite)
+		UDecalComponent* Decal;
+	UPROPERTY(VisibleAnywhere)
+		USceneComponent* Root;
 };

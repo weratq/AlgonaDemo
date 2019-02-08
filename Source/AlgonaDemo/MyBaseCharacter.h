@@ -61,6 +61,8 @@ public:
 		void CharDie();
 	UFUNCTION(BlueprintCallable, Category = "CharBase")
 		void Restartg();
+	UFUNCTION(BlueprintCallable, Category = "CharBase")
+		void ApplyGESpecHandleToTargetSpecHandle( const FGameplayEffectSpecHandle& GESpecHandle,const FGameplayAbilityTargetDataHandle& TargetDataHandle );
 	FVector StartLocation;
 
 	void OnEffectAdd(UAbilitySystemComponent * Target, const FGameplayEffectSpec & SpecApplied, FActiveGameplayEffectHandle ActiveHandle);

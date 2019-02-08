@@ -110,6 +110,14 @@ void AMyBaseCharacter::Restartg()
 	//CharAttribute->ResetAttributs();
 }
 
+void AMyBaseCharacter::ApplyGESpecHandleToTargetSpecHandle(const FGameplayEffectSpecHandle & GESpecHandle, const FGameplayAbilityTargetDataHandle & TargetDataHandle)
+{
+	for (TSharedPtr<FGameplayAbilityTargetData> Data : TargetDataHandle.Data)
+	{
+		Data->ApplyGameplayEffectSpec(*GESpecHandle.Data.Get());
+	}
+}
+
 void AMyBaseCharacter::AutoDeterminTeamIDByContRollerType()
 {
 	if (GetController() && GetController()->IsPlayerController())

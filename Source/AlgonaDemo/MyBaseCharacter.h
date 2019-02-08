@@ -62,6 +62,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "CharBase")
 		void Restartg();
 	FVector StartLocation;
+
+	void OnEffectAdd(UAbilitySystemComponent * Target, const FGameplayEffectSpec & SpecApplied, FActiveGameplayEffectHandle ActiveHandle);
+
 protected:
 	bool bIsDie = false;
 	uint8 TeamID;

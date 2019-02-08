@@ -38,7 +38,7 @@ void ABaseGameplayAbilityTargetActor::StartTargeting(UGameplayAbility* Ability)
 
 void ABaseGameplayAbilityTargetActor::ConfirmTargetingAndContinue()
 {
-	FVector ViewPoint;
+	//FVector ViewPoint;
 	GetPlayerLookingPoint(ViewPoint);
 
 	TArray<FOverlapResult> Overlaps;
@@ -71,13 +71,22 @@ void ABaseGameplayAbilityTargetActor::ConfirmTargetingAndContinue()
 
 		}
 	}
+
+	FGameplayAbilityTargetData_LocationInfo* CenterLocation = new FGameplayAbilityTargetData_LocationInfo();
+	if (Decal)
+	{
+		CenterLocation->TargetLocation.LiteralTransform = Decal->GetComponentTransform();
+		CenterLocation->TargetLocation.LocationType = EGameplayAbilityTargetingLocationType::LiteralTransform;
+	}
+
 	if (OverlapingActors.Num() > 0)
-	{	UE_LOG(LogTemp, Warning, TEXT("ADD"));
+	{	//UE_LOG(LogTemp, Warning, TEXT("ADD"));
 		FGameplayAbilityTargetDataHandle TargetData = StartLocation.MakeTargetDataHandleFromActors(OverlapingActors);
+		TargetData.Add(CenterLocation);
 		TargetDataReadyDelegate.Broadcast(TargetData);
 	}
-	else {
-		TargetDataReadyDelegate.Broadcast(FGameplayAbilityTargetDataHandle());
+	else {		
+		TargetDataReadyDelegate.Broadcast(FGameplayAbilityTargetDataHandle(CenterLocation));
 	}
 }
 

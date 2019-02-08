@@ -30,4 +30,6 @@ public:
 		UDecalComponent* Decal;
 	UPROPERTY(VisibleAnywhere)
 		USceneComponent* Root;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		FVector ViewPoint;
 };

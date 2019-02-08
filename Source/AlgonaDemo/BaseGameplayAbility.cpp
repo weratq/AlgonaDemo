@@ -25,4 +25,7 @@ FGameplayAbilityInfo UBaseGameplayAbility::GetAbilityInfo()
 		return FGameplayAbilityInfo(CoolDownDuration,Cost,CostType,UIMaterial,GetClass());
 	}
 	return FGameplayAbilityInfo();
+	
 }
+
+

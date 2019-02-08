@@ -24,7 +24,9 @@ void AMyBaseCharacter::BeginPlay()
 	CharAttribute->OnHealthChange_del.AddDynamic(this, &AMyBaseCharacter::OnHelthChanged);
 	CharAttribute->OnManaChange_del.AddDynamic(this, &AMyBaseCharacter::OnManaChanged);
 	AutoDeterminTeamIDByContRollerType();
+
 	//StartLocation = GetActorLocation();
+	
 }
 
 // Called every frame
@@ -114,6 +116,11 @@ void AMyBaseCharacter::AutoDeterminTeamIDByContRollerType()
 	{
 		TeamID = 0;
 	}
+}
+
+void AMyBaseCharacter::OnEffectAdd(UAbilitySystemComponent * Target, const FGameplayEffectSpec & SpecApplied, FActiveGameplayEffectHandle ActiveHandle)
+{
+	UE_LOG(LogTemp, Warning, TEXT("hgdlfg"));
 }
 
 

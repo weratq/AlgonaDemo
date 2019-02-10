@@ -118,6 +118,22 @@ void AMyBaseCharacter::ApplyGESpecHandleToTargetSpecHandle(const FGameplayEffect
 	}
 }
 
+void AMyBaseCharacter::SetPlayerAttribute(float MaxHEalth, float MaxMana, float Strength, float Inteligence, float Agility, float Spirit, float Armor, float CritMelee, float CritMagic,float WeaponDamage)
+{	
+	CharAttribute->MaxHealth.SetCurrentValue(MaxHEalth);
+	CharAttribute->MaxMana.SetCurrentValue(MaxMana);
+	CharAttribute->Strength.SetBaseValue(Strength);
+	CharAttribute->Inteligence.SetBaseValue(Inteligence);
+	CharAttribute->Agility.SetBaseValue(Agility);
+	CharAttribute->Spirit.SetBaseValue(Spirit);
+	CharAttribute->Armor.SetBaseValue(Armor);
+	CharAttribute->CritMelee.SetBaseValue(CritMelee);
+	CharAttribute->CritMagic.SetBaseValue(CritMagic);
+	CharAttribute->WeaponDamage.SetBaseValue(WeaponDamage);
+	OnHelthChanged(CharAttribute->Health.GetCurrentValue(), MaxHEalth);
+	OnManaChanged(CharAttribute->Mana.GetCurrentValue(), MaxMana);
+}
+
 void AMyBaseCharacter::AutoDeterminTeamIDByContRollerType()
 {
 	if (GetController() && GetController()->IsPlayerController())

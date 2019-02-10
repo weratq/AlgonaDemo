@@ -52,6 +52,8 @@ public:
 		void BP_OnHelthChange(float Health, float MaxHealth);
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "OnManaChange"))
 		void BP_OnManaChange(float Mana, float MaxMana);
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "SpawnDamageWidget"))
+		void SpawnDamageWidget(float Damage);
 
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "OnDie"))
 		void BP_OnDie();
@@ -63,6 +65,13 @@ public:
 		void Restartg();
 	UFUNCTION(BlueprintCallable, Category = "CharBase")
 		void ApplyGESpecHandleToTargetSpecHandle( const FGameplayEffectSpecHandle& GESpecHandle,const FGameplayAbilityTargetDataHandle& TargetDataHandle );
+	UFUNCTION(BlueprintCallable, Category = "CharBase")
+		void SetPlayerAttribute(
+			float MaxHEalth, float MaxMana, float Strength,
+			float Inteligence, float Agility, float Spirit, 
+			float Armor, float CritMelee, float CritMagic,
+			float WeaponDamage);
+	
 	FVector StartLocation;
 
 	void OnEffectAdd(UAbilitySystemComponent * Target, const FGameplayEffectSpec & SpecApplied, FActiveGameplayEffectHandle ActiveHandle);

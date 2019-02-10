@@ -46,7 +46,10 @@ public:
 		FGameplayAttributeData CritMelee;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
 		FGameplayAttributeData CritMagic;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
+		FGameplayAttributeData WeaponDamage;
 
+	UFUNCTION(BlueprintCallable, Category = "CharBase")
 	void ResetAttributs();
 
 	FOnFloatChngeDelegate OnHealthChange_del;

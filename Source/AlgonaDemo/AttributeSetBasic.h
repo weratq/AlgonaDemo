@@ -48,6 +48,9 @@ public:
 		FGameplayAttributeData CritMagic;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
 		FGameplayAttributeData WeaponDamage;
+// only for overwrite in damagecalculation
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
+		FGameplayAttributeData SpellBonusDamage;
 
 	UFUNCTION(BlueprintCallable, Category = "CharBase")
 	void ResetAttributs();

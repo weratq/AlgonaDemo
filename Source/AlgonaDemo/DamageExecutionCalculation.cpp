@@ -38,10 +38,7 @@ UDamageExecutionCalculation::UDamageExecutionCalculation()
 
 }
 
-bool ShouldHappen(int percentage)
-{
-	return (FMath::RandRange(1, 100 / percentage) == 1 ? true : false);
-}
+
 
 
 void UDamageExecutionCalculation::Execute_Implementation(const FGameplayEffectCustomExecutionParameters & ExecutionParams, FGameplayEffectCustomExecutionOutput & OutExecutionOutput) const
@@ -56,18 +53,15 @@ void UDamageExecutionCalculation::Execute_Implementation(const FGameplayEffectCu
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageStatics().ArmorDef, FAggregatorEvaluateParameters(), ArmorMagnitude);
 
 	//calculation + ((Strength/100) *WeaponDamage)
-	UE_LOG(LogTemp, Warning, TEXT("%f"), Strength);
+	/*UE_LOG(LogTemp, Warning, TEXT("%f"), Strength);
 	UE_LOG(LogTemp, Warning, TEXT("%f"), WeaponDamage);
 	UE_LOG(LogTemp, Warning, TEXT("%f"), CritMelee);
-	UE_LOG(LogTemp, Warning, TEXT("%f"), ArmorMagnitude);
+	UE_LOG(LogTemp, Warning, TEXT("%f"), ArmorMagnitude);*/
 	float FinalDamage = FMath::Clamp(WeaponDamage + ((Strength / 100) *WeaponDamage) - ArmorMagnitude , 0.f, 9999.f);
 	
 	if (CritMelee != 0) 
 	{
-		if (ShouldHappen(CritMelee * 100))
-		{
-			FinalDamage *= 2.f;
-		}
+		
 	}
 
 	OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData (HealthProperty, EGameplayModOp::Additive, -FinalDamage));

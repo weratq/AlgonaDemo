@@ -12,7 +12,8 @@ UAttributeSetBasic::UAttributeSetBasic()
 	Mana(100.f),
 	MaxMana(100.f),
 	Strength(20.f),
-	Armor(10.f)
+	Armor(10.f),
+	SpellBonusDamage(1.f)
 {
 
 }

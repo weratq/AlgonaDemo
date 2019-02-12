@@ -122,16 +122,33 @@ void AMyBaseCharacter::SetPlayerAttribute(float MaxHEalth, float MaxMana, float 
 {	
 	CharAttribute->MaxHealth.SetCurrentValue(MaxHEalth);
 	CharAttribute->MaxMana.SetCurrentValue(MaxMana);
-	CharAttribute->Strength.SetBaseValue(Strength);
+	/*CharAttribute->Strength.SetBaseValue(Strength);
+	CharAttribute->Strength.SetCurrentValue(Strength);
 	CharAttribute->Inteligence.SetBaseValue(Inteligence);
+	CharAttribute->Inteligence.SetCurrentValue(Inteligence);
 	CharAttribute->Agility.SetBaseValue(Agility);
+	CharAttribute->Agility.SetCurrentValue(Agility);
 	CharAttribute->Spirit.SetBaseValue(Spirit);
+	CharAttribute->Spirit.SetCurrentValue(Spirit);
 	CharAttribute->Armor.SetBaseValue(Armor);
+	CharAttribute->Armor.SetCurrentValue(Armor);
 	CharAttribute->CritMelee.SetBaseValue(CritMelee);
+	CharAttribute->CritMelee.SetCurrentValue(CritMelee);
 	CharAttribute->CritMagic.SetBaseValue(CritMagic);
+	CharAttribute->CritMagic.SetCurrentValue(CritMagic);
 	CharAttribute->WeaponDamage.SetBaseValue(WeaponDamage);
+	CharAttribute->WeaponDamage.SetCurrentValue(WeaponDamage);*/
 	OnHelthChanged(CharAttribute->Health.GetCurrentValue(), MaxHEalth);
 	OnManaChanged(CharAttribute->Mana.GetCurrentValue(), MaxMana);
+}
+
+void AMyBaseCharacter::AddEffectWhithCount(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level, FGameplayEffectContextHandle EffectContext,int Count)
+{
+	for (int i = 0; i < Count; ++i)
+	{
+		AbilitySystemComp->BP_ApplyGameplayEffectToSelf(GameplayEffectClass, Level, EffectContext);
+	}
+	
 }
 
 void AMyBaseCharacter::AutoDeterminTeamIDByContRollerType()

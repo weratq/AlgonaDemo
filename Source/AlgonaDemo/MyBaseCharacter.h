@@ -71,7 +71,10 @@ public:
 			float Inteligence, float Agility, float Spirit, 
 			float Armor, float CritMelee, float CritMagic,
 			float WeaponDamage);
+	UFUNCTION(BlueprintCallable, Category = "CharBase")
+		void AddEffectWhithCount(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level, FGameplayEffectContextHandle EffectContext,int Count);
 	
+
 	FVector StartLocation;
 
 	void OnEffectAdd(UAbilitySystemComponent * Target, const FGameplayEffectSpec & SpecApplied, FActiveGameplayEffectHandle ActiveHandle);

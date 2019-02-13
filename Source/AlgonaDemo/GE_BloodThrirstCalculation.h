@@ -13,5 +13,8 @@ UCLASS()
 class ALGONADEMO_API UGE_BloodThrirstCalculation : public UGameplayEffectExecutionCalculation
 {
 	GENERATED_BODY()
-	
+public:
+	UGE_BloodThrirstCalculation();
+
+		void Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const;
 };

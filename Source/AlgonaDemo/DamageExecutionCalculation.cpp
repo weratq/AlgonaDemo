@@ -9,11 +9,13 @@ struct DamageStatics
 	DECLARE_ATTRIBUTE_CAPTUREDEF(WeaponDamage)
 	DECLARE_ATTRIBUTE_CAPTUREDEF(CritMelee)
 	DECLARE_ATTRIBUTE_CAPTUREDEF(Armor)
+	DECLARE_ATTRIBUTE_CAPTUREDEF(SpellBonusDamage)
 	DamageStatics() {
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAttributeSetBasic, Strength, Source, true);
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAttributeSetBasic, Armor, Target, false);
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAttributeSetBasic, WeaponDamage, Source, true);
 		DEFINE_ATTRIBUTE_CAPTUREDEF(UAttributeSetBasic, CritMelee, Source, true);
+		DEFINE_ATTRIBUTE_CAPTUREDEF(UAttributeSetBasic, SpellBonusDamage, Source, true);
 	}
 };
 
@@ -35,6 +37,7 @@ UDamageExecutionCalculation::UDamageExecutionCalculation()
 	RelevantAttributesToCapture.Add(GetDamageStatics().StrengthDef);
 	RelevantAttributesToCapture.Add(GetDamageStatics().WeaponDamageDef);
 	RelevantAttributesToCapture.Add(GetDamageStatics().CritMeleeDef);
+	RelevantAttributesToCapture.Add(GetDamageStatics().SpellBonusDamageDef);
 
 }
 
@@ -51,13 +54,19 @@ void UDamageExecutionCalculation::Execute_Implementation(const FGameplayEffectCu
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageStatics().CritMeleeDef, FAggregatorEvaluateParameters(), CritMelee);
 	float ArmorMagnitude = 0.f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageStatics().ArmorDef, FAggregatorEvaluateParameters(), ArmorMagnitude);
+	float SpellBonusDamage = 1.f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageStatics().SpellBonusDamageDef, FAggregatorEvaluateParameters(), SpellBonusDamage);
 
 	//calculation + ((Strength/100) *WeaponDamage)
 	/*UE_LOG(LogTemp, Warning, TEXT("%f"), Strength);
 	UE_LOG(LogTemp, Warning, TEXT("%f"), WeaponDamage);
 	UE_LOG(LogTemp, Warning, TEXT("%f"), CritMelee);
 	UE_LOG(LogTemp, Warning, TEXT("%f"), ArmorMagnitude);*/
-	float FinalDamage = FMath::Clamp(WeaponDamage + ((Strength / 100) *WeaponDamage) - ArmorMagnitude , 0.f, 9999.f);
+	float AllDamage = 0.f;
+	AllDamage = WeaponDamage + Strength;
+	AllDamage *= SpellBonusDamage;
+
+	float FinalDamage = FMath::Clamp(AllDamage  - ArmorMagnitude , 0.f, 9999.f);
 	
 	if (CritMelee != 0) 
 	{

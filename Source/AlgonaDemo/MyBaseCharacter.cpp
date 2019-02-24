@@ -23,6 +23,7 @@ void AMyBaseCharacter::BeginPlay()
 	Super::BeginPlay();
 	CharAttribute->OnHealthChange_del.AddDynamic(this, &AMyBaseCharacter::OnHelthChanged);
 	CharAttribute->OnManaChange_del.AddDynamic(this, &AMyBaseCharacter::OnManaChanged);
+	CharAttribute->OnRageChange_del.AddDynamic(this, &AMyBaseCharacter::BP_OnRageChange);
 	AutoDeterminTeamIDByContRollerType();
 
 	//StartLocation = GetActorLocation();

@@ -13,7 +13,9 @@ UAttributeSetBasic::UAttributeSetBasic()
 	MaxMana(100.f),
 	Strength(20.f),
 	Armor(10.f),
-	SpellBonusDamage(1.f)
+	SpellBonusDamage(1.f),
+	Rage(0.f),
+	MaxRage(100.f)
 {
 
 }
@@ -50,6 +52,13 @@ void UAttributeSetBasic::PostGameplayEffectExecute(const struct FGameplayEffectM
 		Mana.SetCurrentValue(FMath::Clamp(Mana.GetCurrentValue(), 0.f, MaxMana.GetCurrentValue()));
 		Mana.SetBaseValue(FMath::Clamp(Mana.GetCurrentValue(), 0.f, MaxMana.GetCurrentValue()));
 		OnManaChange_del.Broadcast(Mana.GetCurrentValue(), MaxMana.GetCurrentValue());
+	}
+	//Rage
+	if (Data.EvaluatedData.Attribute.GetUProperty() == FindFieldChecked<UProperty>(UAttributeSetBasic::StaticClass(), GET_MEMBER_NAME_CHECKED(UAttributeSetBasic, Rage))) {
+		//UE_LOG(LogTemp, Warning, TEXT("%f"), Health.GetCurrentValue());
+		Mana.SetCurrentValue(FMath::Clamp(Rage.GetCurrentValue(), 0.f, MaxRage.GetCurrentValue()));
+		Mana.SetBaseValue(FMath::Clamp(Rage.GetCurrentValue(), 0.f, MaxRage.GetCurrentValue()));
+		OnRageChange_del.Broadcast(Rage.GetCurrentValue(), MaxRage.GetCurrentValue());
 	}
 
 }

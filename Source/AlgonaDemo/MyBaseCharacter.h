@@ -52,6 +52,8 @@ public:
 		void BP_OnHelthChange(float Health, float MaxHealth);
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "OnManaChange"))
 		void BP_OnManaChange(float Mana, float MaxMana);
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "OnRageChange"))
+		void BP_OnRageChange(float Rage, float MaxRage);
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "SpawnDamageWidget"))
 		void SpawnDamageWidget(float Damage);
 

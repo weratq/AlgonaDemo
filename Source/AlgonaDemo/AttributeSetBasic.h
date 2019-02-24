@@ -48,6 +48,10 @@ public:
 		FGameplayAttributeData CritMagic;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
 		FGameplayAttributeData WeaponDamage;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
+		FGameplayAttributeData Rage;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
+		FGameplayAttributeData MaxRage;
 // only for overwrite in damagecalculation
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
 		FGameplayAttributeData SpellBonusDamage;
@@ -57,5 +61,6 @@ public:
 
 	FOnFloatChngeDelegate OnHealthChange_del;
 	FOnFloatChngeDelegate OnManaChange_del;
+	FOnFloatChngeDelegate OnRageChange_del;
 
 };

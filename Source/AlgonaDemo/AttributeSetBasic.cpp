@@ -56,8 +56,8 @@ void UAttributeSetBasic::PostGameplayEffectExecute(const struct FGameplayEffectM
 	//Rage
 	if (Data.EvaluatedData.Attribute.GetUProperty() == FindFieldChecked<UProperty>(UAttributeSetBasic::StaticClass(), GET_MEMBER_NAME_CHECKED(UAttributeSetBasic, Rage))) {
 		//UE_LOG(LogTemp, Warning, TEXT("%f"), Health.GetCurrentValue());
-		Mana.SetCurrentValue(FMath::Clamp(Rage.GetCurrentValue(), 0.f, MaxRage.GetCurrentValue()));
-		Mana.SetBaseValue(FMath::Clamp(Rage.GetCurrentValue(), 0.f, MaxRage.GetCurrentValue()));
+		Rage.SetCurrentValue(FMath::Clamp(Rage.GetCurrentValue(), 0.f, MaxRage.GetCurrentValue()));
+		Rage.SetBaseValue(FMath::Clamp(Rage.GetCurrentValue(), 0.f, MaxRage.GetCurrentValue()));
 		OnRageChange_del.Broadcast(Rage.GetCurrentValue(), MaxRage.GetCurrentValue());
 	}
 

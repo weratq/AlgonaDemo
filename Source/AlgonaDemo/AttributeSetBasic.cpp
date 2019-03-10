@@ -60,7 +60,11 @@ void UAttributeSetBasic::PostGameplayEffectExecute(const struct FGameplayEffectM
 		Rage.SetBaseValue(FMath::Clamp(Rage.GetCurrentValue(), 0.f, MaxRage.GetCurrentValue()));
 		OnRageChange_del.Broadcast(Rage.GetCurrentValue(), MaxRage.GetCurrentValue());
 	}
-
+	/*if (Data.EvaluatedData.Attribute.GetUProperty() == FindFieldChecked<UProperty>(UAttributeSetBasic::StaticClass(), GET_MEMBER_NAME_CHECKED(UAttributeSetBasic, MaxHealth))) {
+		//UE_LOG(LogTemp, Warning, TEXT("%f"), Health.GetCurrentValue());
+		MaxHealth.SetCurrentValue(MaxHealth.GetCurrentValue());
+		MaxHealth.SetBaseValue(MaxHealth.GetCurrentValue());		
+	}*/
 }
 
 void UAttributeSetBasic::ResetAttributs()

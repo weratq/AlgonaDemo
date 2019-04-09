@@ -24,10 +24,12 @@ void UMyAbilitySystemComponent::BeginPlay()
 
 	// Cache net role here as well since for map-placed actors on clients, the Role may not be set correctly yet in OnRegister.
 	//CacheIsNetSimulated();
-	OnGameplayEffectAppliedDelegateToTarget.AddUObject(this, &UMyAbilitySystemComponent::OnEffectAdd);
+	
+	
 }
 
 void UMyAbilitySystemComponent::OnEffectAdd(UAbilitySystemComponent * Target, const FGameplayEffectSpec & SpecApplied, FActiveGameplayEffectHandle ActiveHandle)
 {
 	UE_LOG(LogTemp, Warning, TEXT("hgdlfg"));
+	
 }

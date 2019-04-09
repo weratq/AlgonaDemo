@@ -15,6 +15,8 @@ class ALGONADEMO_API UMyAbilitySystemComponent : public UAbilitySystemComponent
 	GENERATED_BODY()
 public:
 	virtual	void BeginPlay() override;
+	
+	UFUNCTION(BlueprintCallable)
 	void OnEffectAdd(UAbilitySystemComponent* Target, const FGameplayEffectSpec& SpecApplied, FActiveGameplayEffectHandle ActiveHandle);
-
+	
 };

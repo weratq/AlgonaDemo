@@ -25,8 +25,9 @@ void AMyBaseCharacter::BeginPlay()
 	CharAttribute->OnManaChange_del.AddDynamic(this, &AMyBaseCharacter::OnManaChanged);
 	CharAttribute->OnRageChange_del.AddDynamic(this, &AMyBaseCharacter::BP_OnRageChange);
 	AutoDeterminTeamIDByContRollerType();
-
+	OnEffectAddDelegateHandle = AbilitySystemComp->OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &AMyBaseCharacter::OnEffectAdd);
 	//StartLocation = GetActorLocation();
+	AbilitySystemComp->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &AMyBaseCharacter::OnEffectRemoved);
 	
 }
 
@@ -123,22 +124,6 @@ void AMyBaseCharacter::SetPlayerAttribute(float MaxHEalth, float MaxMana, float 
 {	
 	CharAttribute->MaxHealth.SetCurrentValue(MaxHEalth);
 	CharAttribute->MaxMana.SetCurrentValue(MaxMana);
-	/*CharAttribute->Strength.SetBaseValue(Strength);
-	CharAttribute->Strength.SetCurrentValue(Strength);
-	CharAttribute->Inteligence.SetBaseValue(Inteligence);
-	CharAttribute->Inteligence.SetCurrentValue(Inteligence);
-	CharAttribute->Agility.SetBaseValue(Agility);
-	CharAttribute->Agility.SetCurrentValue(Agility);
-	CharAttribute->Spirit.SetBaseValue(Spirit);
-	CharAttribute->Spirit.SetCurrentValue(Spirit);
-	CharAttribute->Armor.SetBaseValue(Armor);
-	CharAttribute->Armor.SetCurrentValue(Armor);
-	CharAttribute->CritMelee.SetBaseValue(CritMelee);
-	CharAttribute->CritMelee.SetCurrentValue(CritMelee);
-	CharAttribute->CritMagic.SetBaseValue(CritMagic);
-	CharAttribute->CritMagic.SetCurrentValue(CritMagic);
-	CharAttribute->WeaponDamage.SetBaseValue(WeaponDamage);
-	CharAttribute->WeaponDamage.SetCurrentValue(WeaponDamage);*/
 	OnHelthChanged(CharAttribute->Health.GetCurrentValue(), MaxHEalth);
 	OnManaChanged(CharAttribute->Mana.GetCurrentValue(), MaxMana);
 }
@@ -162,7 +147,39 @@ void AMyBaseCharacter::AutoDeterminTeamIDByContRollerType()
 
 void AMyBaseCharacter::OnEffectAdd(UAbilitySystemComponent * Target, const FGameplayEffectSpec & SpecApplied, FActiveGameplayEffectHandle ActiveHandle)
 {
-	UE_LOG(LogTemp, Warning, TEXT("hgdlfg"));
+	UDotGameplayEffectUIData* DotUIData;
+	DotUIData = Cast<UDotGameplayEffectUIData>(SpecApplied.Def->UIData);
+	if (DotUIData)
+	{
+		
+		FBP_DotInfo DotInfo;
+		DotInfo.Def = SpecApplied.Def;
+		DotInfo.Duration = SpecApplied.Duration;
+		DotInfo.EffectIcon = DotUIData->IconMaterial;
+		DotInfoArr.Add(DotInfo);
+
+		BP_AddDotToUI(DotInfo);
+	}
+}
+
+void AMyBaseCharacter::OnEffectRemoved(const FActiveGameplayEffect & Effect)
+{
+	UE_LOG(LogTemp, Warning, TEXT("EffectRemoved"));
+
+	UDotGameplayEffectUIData* CurrDot;
+		CurrDot = Cast<UDotGameplayEffectUIData>(Effect.Spec.Def->UIData);
+	if (CurrDot)
+	{
+		for (int32 i = 0; i < DotInfoArr.Num(); ++i)
+		{
+			if (DotInfoArr[i].Def == Effect.Spec.Def)
+			{
+				BP_RemvoeDotFromUI(DotInfoArr[i]);
+				DotInfoArr.RemoveAt(i);
+				return;
+			}
+		}	
+	}	
 }
 
 

@@ -9,7 +9,25 @@
 #include "AbilitySystemComponent.h"
 #include "Engine/Public/TimerManager.h"
 #include "AttributeSetBasic.h"
+#include "Abilites/DotGameplayEffectUIData.h"
 #include "MyBaseCharacter.generated.h"
+
+
+
+USTRUCT(BlueprintType)
+struct FBP_DotInfo
+{
+	GENERATED_BODY()
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BP_DotInfoStruct")
+		int IdAppliedEffect;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BP_DotInfoStruct")
+		UMaterialInstance* EffectIcon;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BP_DotInfoStruct")
+		float Duration;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BP_DotInfoStruct")
+		const UGameplayEffect* Def;
+};
+
 
 //class UAttributeSetBasic;
 
@@ -78,12 +96,25 @@ public:
 	
 
 	FVector StartLocation;
-
+UFUNCTION(BlueprintCallable)
 	void OnEffectAdd(UAbilitySystemComponent * Target, const FGameplayEffectSpec & SpecApplied, FActiveGameplayEffectHandle ActiveHandle);
+UFUNCTION(BlueprintCallable)
+	void OnEffectRemoved(const FActiveGameplayEffect& Effect);
+
+		/* Delegates */
+	FDelegateHandle OnEffectAddDelegateHandle;
+	
+	
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "AddDotToUI"))
+		void BP_AddDotToUI(FBP_DotInfo DotData);
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "RemoveDotFromUI"))
+		void BP_RemvoeDotFromUI(FBP_DotInfo DotData);
+		
+	TArray<FBP_DotInfo> DotInfoArr;
 
 protected:
 	bool bIsDie = false;
 	uint8 TeamID;
 	void AutoDeterminTeamIDByContRollerType();
-
+	
 };

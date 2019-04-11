@@ -52,6 +52,8 @@ public:
 		FGameplayAttributeData Rage;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
 		FGameplayAttributeData MaxRage;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
+		FGameplayAttributeData WalkSpeed;
 // only for overwrite in damagecalculation
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
 		FGameplayAttributeData SpellBonusDamage;
@@ -62,5 +64,6 @@ public:
 	FOnFloatChngeDelegate OnHealthChange_del;
 	FOnFloatChngeDelegate OnManaChange_del;
 	FOnFloatChngeDelegate OnRageChange_del;
+	FOnFloatChngeDelegate OnSpeedChange_del;
 
 };

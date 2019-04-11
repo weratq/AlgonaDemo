@@ -21,9 +21,13 @@ AMyBaseCharacter::AMyBaseCharacter()
 void AMyBaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	/*Bind event on attribute change in BP*/
 	CharAttribute->OnHealthChange_del.AddDynamic(this, &AMyBaseCharacter::OnHelthChanged);
 	CharAttribute->OnManaChange_del.AddDynamic(this, &AMyBaseCharacter::OnManaChanged);
 	CharAttribute->OnRageChange_del.AddDynamic(this, &AMyBaseCharacter::BP_OnRageChange);
+	CharAttribute->OnRageChange_del.AddDynamic(this, &AMyBaseCharacter::BP_OnSpeedChange);
+
 	AutoDeterminTeamIDByContRollerType();
 	OnEffectAddDelegateHandle = AbilitySystemComp->OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &AMyBaseCharacter::OnEffectAdd);
 	//StartLocation = GetActorLocation();
@@ -164,8 +168,6 @@ void AMyBaseCharacter::OnEffectAdd(UAbilitySystemComponent * Target, const FGame
 
 void AMyBaseCharacter::OnEffectRemoved(const FActiveGameplayEffect & Effect)
 {
-	UE_LOG(LogTemp, Warning, TEXT("EffectRemoved"));
-
 	UDotGameplayEffectUIData* CurrDot;
 		CurrDot = Cast<UDotGameplayEffectUIData>(Effect.Spec.Def->UIData);
 	if (CurrDot)

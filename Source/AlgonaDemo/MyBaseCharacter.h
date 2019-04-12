@@ -61,17 +61,21 @@ public:
 		void AddAbility(TSubclassOf<UGameplayAbility> AbilityToAdd);
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 
+
+				/*-----On attribute change-----*/
 	UFUNCTION()
 		void OnHelthChanged(float Health, float MaxHealth);
 	UFUNCTION()
 		void OnManaChanged(float Mana, float MaxMana);
-
+	
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "OnHealthChange"))
 		void BP_OnHelthChange(float Health, float MaxHealth);
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "OnManaChange"))
 		void BP_OnManaChange(float Mana, float MaxMana);
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "OnRageChange"))
 		void BP_OnRageChange(float Rage, float MaxRage);
+	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "OnSpeedChange"))
+		void BP_OnSpeedChange(float Rage, float MaxRage);
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "SpawnDamageWidget"))
 		void SpawnDamageWidget(float Damage);
 

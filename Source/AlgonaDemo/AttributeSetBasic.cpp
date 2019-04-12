@@ -62,7 +62,7 @@ void UAttributeSetBasic::PostGameplayEffectExecute(const struct FGameplayEffectM
 		OnRageChange_del.Broadcast(Rage.GetCurrentValue(), MaxRage.GetCurrentValue());
 	}
 	if (Data.EvaluatedData.Attribute.GetUProperty() == FindFieldChecked<UProperty>(UAttributeSetBasic::StaticClass(), GET_MEMBER_NAME_CHECKED(UAttributeSetBasic, WalkSpeed))) {
-		
+		UE_LOG(LogTemp, Warning, TEXT("fdgd"));
 		WalkSpeed.SetCurrentValue(WalkSpeed.GetCurrentValue());
 		WalkSpeed.SetBaseValue(WalkSpeed.GetCurrentValue());
 		OnSpeedChange_del.Broadcast(WalkSpeed.GetCurrentValue(), WalkSpeed.GetCurrentValue());

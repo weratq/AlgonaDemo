@@ -26,7 +26,7 @@ void AMyBaseCharacter::BeginPlay()
 	CharAttribute->OnHealthChange_del.AddDynamic(this, &AMyBaseCharacter::OnHelthChanged);
 	CharAttribute->OnManaChange_del.AddDynamic(this, &AMyBaseCharacter::OnManaChanged);
 	CharAttribute->OnRageChange_del.AddDynamic(this, &AMyBaseCharacter::BP_OnRageChange);
-	CharAttribute->OnRageChange_del.AddDynamic(this, &AMyBaseCharacter::BP_OnSpeedChange);
+	CharAttribute->OnSpeedChange_del.AddDynamic(this, &AMyBaseCharacter::BP_OnSpeedChange);
 
 	AutoDeterminTeamIDByContRollerType();
 	OnEffectAddDelegateHandle = AbilitySystemComp->OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &AMyBaseCharacter::OnEffectAdd);

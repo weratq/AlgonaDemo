@@ -61,6 +61,13 @@ public:
 		void AddAbility(TSubclassOf<UGameplayAbility> AbilityToAdd);
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 
+	/*Input Action*/
+	UFUNCTION(BlueprintImplementableEvent, Category = "InputAction")
+		void BP_DodgeLeft();
+	UFUNCTION(BlueprintImplementableEvent, Category = "InputAction")
+		void BP_DodgeRight();
+
+
 
 				/*-----On attribute change-----*/
 	UFUNCTION()

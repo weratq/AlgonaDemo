@@ -14,7 +14,8 @@ AMyBaseCharacter::AMyBaseCharacter()
 	AbilitySystemComp = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
 	CharAttribute = CreateDefaultSubobject<UAttributeSetBasic>("CharAttibut");
 	TeamID = 255;
-
+	//InputComponent->BindAction("Dodge_Left", IE_DoubleClick, this, &AMyBaseCharacter::BP_DodgeLeft);
+	//InputComponent->BindAction("Dodge_Right", IE_DoubleClick, this, &AMyBaseCharacter::BP_DodgeRight);
 }
 
 // Called when the game starts or when spawned

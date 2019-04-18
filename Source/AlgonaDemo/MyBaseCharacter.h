@@ -120,7 +120,13 @@ UFUNCTION(BlueprintCallable)
 		void BP_AddDotToUI(FBP_DotInfo DotData);
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "RemoveDotFromUI"))
 		void BP_RemvoeDotFromUI(FBP_DotInfo DotData);
-		
+	//UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "StackChenge"))
+	
+	UFUNCTION()
+	void TestStack2(const FGameplayEffectRemovalInfo& a);
+
+	UFUNCTION()
+	void TestStack(FActiveGameplayEffectHandle Handle, int32 NewStack, int32 PreviousStackCount);
 	TArray<FBP_DotInfo> DotInfoArr;
 
 protected:

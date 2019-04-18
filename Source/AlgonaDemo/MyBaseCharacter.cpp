@@ -5,6 +5,7 @@
 #include "AIController.h"
 #include "BrainComponent.h"
 
+#include "Object.h"
 
 // Sets default values
 AMyBaseCharacter::AMyBaseCharacter()
@@ -29,10 +30,12 @@ void AMyBaseCharacter::BeginPlay()
 	CharAttribute->OnRageChange_del.AddDynamic(this, &AMyBaseCharacter::BP_OnRageChange);
 	CharAttribute->OnSpeedChange_del.AddDynamic(this, &AMyBaseCharacter::BP_OnSpeedChange);
 
+
 	AutoDeterminTeamIDByContRollerType();
 	OnEffectAddDelegateHandle = AbilitySystemComp->OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &AMyBaseCharacter::OnEffectAdd);
 	//StartLocation = GetActorLocation();
 	AbilitySystemComp->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &AMyBaseCharacter::OnEffectRemoved);
+	
 	
 }
 
@@ -47,7 +50,9 @@ void AMyBaseCharacter::Tick(float DeltaTime)
 void AMyBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	UE_LOG(LogTemp, Warning, TEXT("BInded"));
+	InputComponent->BindAction("Dodge_Left", IE_DoubleClick, this, &AMyBaseCharacter::BP_DodgeLeft);
+	InputComponent->BindAction("Dodge_Right", IE_DoubleClick, this, &AMyBaseCharacter::BP_DodgeRight);
 }
 
 void AMyBaseCharacter::DotTimer(float tick, float TimeRemaiting) {
@@ -142,6 +147,11 @@ void AMyBaseCharacter::AddEffectWhithCount(TSubclassOf<UGameplayEffect> Gameplay
 	
 }
 
+void AMyBaseCharacter::TestStack(FActiveGameplayEffectHandle Handle, int32 NewStack, int32 PreviousStackCount)
+{
+
+}
+
 void AMyBaseCharacter::AutoDeterminTeamIDByContRollerType()
 {
 	if (GetController() && GetController()->IsPlayerController())
@@ -150,13 +160,25 @@ void AMyBaseCharacter::AutoDeterminTeamIDByContRollerType()
 	}
 }
 
+void AMyBaseCharacter::TestStack2(const FGameplayEffectRemovalInfo& a)
+{
+
+}
+
 void AMyBaseCharacter::OnEffectAdd(UAbilitySystemComponent * Target, const FGameplayEffectSpec & SpecApplied, FActiveGameplayEffectHandle ActiveHandle)
 {
 	UDotGameplayEffectUIData* DotUIData;
 	DotUIData = Cast<UDotGameplayEffectUIData>(SpecApplied.Def->UIData);
+	UE_LOG(LogTemp, Warning, TEXT("Add"));
+
+	auto effect = AbilitySystemComp->GetActiveGameplayEffect(ActiveHandle);
+	auto delegateeffect = effect->EventSet;
+	delegateeffect.OnStackChanged.AddUObject(this, &AMyBaseCharacter::TestStack);
+	//	AbilitySystemComp->GetActiveGameplayEffect(ActiveHandle)->EventSet.OnStackChanged.AddUObject(this, &AMyBaseCharacter::TestStack);
+
+
 	if (DotUIData)
 	{
-		
 		FBP_DotInfo DotInfo;
 		DotInfo.Def = SpecApplied.Def;
 		DotInfo.Duration = SpecApplied.Duration;

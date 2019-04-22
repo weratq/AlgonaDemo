@@ -149,7 +149,7 @@ void AMyBaseCharacter::AddEffectWhithCount(TSubclassOf<UGameplayEffect> Gameplay
 
 void AMyBaseCharacter::TestStack(FActiveGameplayEffectHandle Handle, int32 NewStack, int32 PreviousStackCount)
 {
-
+	UE_LOG(LogTemp, Warning, TEXT("StackCount %d"), NewStack);
 }
 
 void AMyBaseCharacter::AutoDeterminTeamIDByContRollerType()
@@ -169,28 +169,26 @@ void AMyBaseCharacter::OnEffectAdd(UAbilitySystemComponent * Target, const FGame
 {
 	UDotGameplayEffectUIData* DotUIData;
 	DotUIData = Cast<UDotGameplayEffectUIData>(SpecApplied.Def->UIData);
-	UE_LOG(LogTemp, Warning, TEXT("Add"));
-
-	auto effect = AbilitySystemComp->GetActiveGameplayEffect(ActiveHandle);
-	auto delegateeffect = effect->EventSet;
-	delegateeffect.OnStackChanged.AddUObject(this, &AMyBaseCharacter::TestStack);
-	//	AbilitySystemComp->GetActiveGameplayEffect(ActiveHandle)->EventSet.OnStackChanged.AddUObject(this, &AMyBaseCharacter::TestStack);
-
-
+	
 	if (DotUIData)
 	{
-		FBP_DotInfo DotInfo;
-		DotInfo.Def = SpecApplied.Def;
-		DotInfo.Duration = SpecApplied.Duration;
-		DotInfo.EffectIcon = DotUIData->IconMaterial;
-		DotInfoArr.Add(DotInfo);
+		if (AbilitySystemComp->GetActiveGameplayEffect(ActiveHandle) != nullptr) {
 
-		BP_AddDotToUI(DotInfo);
+			FBP_DotInfo DotInfo;
+			DotInfo.Def = SpecApplied.Def;
+			DotInfo.Duration = SpecApplied.Duration;
+			DotInfo.EffectIcon = DotUIData->IconMaterial;
+			DotInfo.StackCount = AbilitySystemComp->GetActiveGameplayEffect(ActiveHandle)->Spec.StackCount;
+			DotInfoArr.Add(DotInfo);
+
+			BP_AddDotToUI(DotInfo);
+		}
 	}
 }
 
 void AMyBaseCharacter::OnEffectRemoved(const FActiveGameplayEffect & Effect)
 {
+	
 	UDotGameplayEffectUIData* CurrDot;
 		CurrDot = Cast<UDotGameplayEffectUIData>(Effect.Spec.Def->UIData);
 	if (CurrDot)

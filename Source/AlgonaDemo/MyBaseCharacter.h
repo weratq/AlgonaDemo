@@ -19,13 +19,14 @@ struct FBP_DotInfo
 {
 	GENERATED_BODY()
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BP_DotInfoStruct")
-		int IdAppliedEffect;
+		int StackCount;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BP_DotInfoStruct")
 		UMaterialInstance* EffectIcon;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BP_DotInfoStruct")
 		float Duration;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BP_DotInfoStruct")
 		const UGameplayEffect* Def;
+
 };
 
 

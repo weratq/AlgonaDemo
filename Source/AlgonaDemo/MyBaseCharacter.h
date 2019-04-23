@@ -62,11 +62,6 @@ public:
 		void AddAbility(TSubclassOf<UGameplayAbility> AbilityToAdd);
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 
-	/*Input Action*/
-	UFUNCTION(BlueprintImplementableEvent, Category = "InputAction")
-		void BP_DodgeLeft();
-	UFUNCTION(BlueprintImplementableEvent, Category = "InputAction")
-		void BP_DodgeRight();
 
 
 
@@ -121,10 +116,7 @@ UFUNCTION(BlueprintCallable)
 		void BP_AddDotToUI(FBP_DotInfo DotData);
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "RemoveDotFromUI"))
 		void BP_RemvoeDotFromUI(FBP_DotInfo DotData);
-	//UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "StackChenge"))
 	
-	UFUNCTION()
-	void TestStack2(const FGameplayEffectRemovalInfo& a);
 
 	UFUNCTION()
 	void TestStack(FActiveGameplayEffectHandle Handle, int32 NewStack, int32 PreviousStackCount);

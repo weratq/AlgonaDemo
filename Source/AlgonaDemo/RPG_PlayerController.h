@@ -75,11 +75,18 @@ UFUNCTION(BlueprintCallable)
 	UFUNCTION(Server, Reliable, WithValidation)
 		void Server_AddSkillOnCD(FServerSkillCD SkillToAdd);
 
+	virtual void SetupInputComponent() override;
+
 		FServerSkillCD ConvertToServerSt(FSkillCoolDown InputCD);
 		//return true if not on CD
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 		bool CheckIsOnCD(int IDSpellBook);
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetSpellCD_Left(int IDSpellBook);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "InputAction")
+		void BP_DodgeLeft();
+	UFUNCTION(BlueprintImplementableEvent, Category = "InputAction")
+		void BP_DodgeRight();
 
 };

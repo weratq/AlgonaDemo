@@ -21,6 +21,13 @@ void ARPG_PlayerController::BeginPlay()
 		GetWorldTimerManager().SetTimer(CD_Timer, this, &ARPG_PlayerController::CD_TickClient, 0.1, true, 0.1);
 	
 }
+void ARPG_PlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+	InputComponent->BindAction("Dodge_Left", IE_DoubleClick, this, &ARPG_PlayerController::BP_DodgeLeft);
+	InputComponent->BindAction("Dodge_Right", IE_DoubleClick, this, &ARPG_PlayerController::BP_DodgeRight);
+ }
+
 
 void ARPG_PlayerController::CD_TickClient(void) {
 	

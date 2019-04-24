@@ -169,6 +169,28 @@ void AMyBaseCharacter::OnEffectAdd(UAbilitySystemComponent * Target, const FGame
 {
 	UDotGameplayEffectUIData* DotUIData;
 	DotUIData = Cast<UDotGameplayEffectUIData>(SpecApplied.Def->UIData);
+
+	AbilitySystemComp->GetActiveEffectEventSet(ActiveHandle)->OnStackChanged.AddUObject(this, &AMyBaseCharacter::TestStack);
+	FOnActiveGameplayEffectStackChange* DelPtr = AbilitySystemComp->OnGameplayEffectStackChangeDelegate(ActiveHandle);
+	if (DelPtr)
+	{
+		bool Find = false;
+		for (int32 i = 0; i < DotInfoArr.Num(); ++i)
+		{
+			if (DotInfoArr[i].Def == SpecApplied.Def)
+			{
+				Find = true;
+			}
+		}
+		if (Find == false) {
+			OnGameplayEffectStackChangeDelegateHandle = DelPtr->AddUObject(this, &AMyBaseCharacter::TestStack);
+			UE_LOG(LogTemp, Warning, TEXT("BInded"));
+		}
+	}
+	
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("Null"));
+	}
 	
 	if (DotUIData)
 	{
@@ -188,7 +210,6 @@ void AMyBaseCharacter::OnEffectAdd(UAbilitySystemComponent * Target, const FGame
 
 void AMyBaseCharacter::OnEffectRemoved(const FActiveGameplayEffect & Effect)
 {
-	
 	UDotGameplayEffectUIData* CurrDot;
 		CurrDot = Cast<UDotGameplayEffectUIData>(Effect.Spec.Def->UIData);
 	if (CurrDot)

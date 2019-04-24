@@ -50,14 +50,11 @@ void AMyBaseCharacter::Tick(float DeltaTime)
 void AMyBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	UE_LOG(LogTemp, Warning, TEXT("BInded"));
-	InputComponent->BindAction("Dodge_Left", IE_DoubleClick, this, &AMyBaseCharacter::BP_DodgeLeft);
-	InputComponent->BindAction("Dodge_Right", IE_DoubleClick, this, &AMyBaseCharacter::BP_DodgeRight);
 }
 
 void AMyBaseCharacter::DotTimer(float tick, float TimeRemaiting) {
 	FTimerHandle Timer;
-	//GetWorldTimerManager().SetTimer(Timer,this, &AMyBaseCharacter::DotTimer, false, tick);
+
 
 }
 
@@ -107,7 +104,6 @@ void AMyBaseCharacter::CharDie()
 	APlayerController* PC = Cast<APlayerController>(GetController());
 	if (PC) {
 		PC->DisableInput(PC);
-		//Restart();
 	}
 	AAIController* APC = Cast<AAIController>(GetController());
 	if (APC) {
@@ -118,8 +114,7 @@ void AMyBaseCharacter::CharDie()
 
 void AMyBaseCharacter::Restartg()
 {
-	//SetActorLocation(StartLocation, false, nullptr, ETeleportType::ResetPhysics);
-	//CharAttribute->ResetAttributs();
+
 }
 
 void AMyBaseCharacter::ApplyGESpecHandleToTargetSpecHandle(const FGameplayEffectSpecHandle & GESpecHandle, const FGameplayAbilityTargetDataHandle & TargetDataHandle)
@@ -160,10 +155,6 @@ void AMyBaseCharacter::AutoDeterminTeamIDByContRollerType()
 	}
 }
 
-void AMyBaseCharacter::TestStack2(const FGameplayEffectRemovalInfo& a)
-{
-
-}
 
 void AMyBaseCharacter::OnEffectAdd(UAbilitySystemComponent * Target, const FGameplayEffectSpec & SpecApplied, FActiveGameplayEffectHandle ActiveHandle)
 {

@@ -58,19 +58,10 @@ public:
 		UAbilitySystemComponent* AbilitySystemComp = nullptr;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Ability")
 		UAttributeSetBasic* CharAttribute = nullptr;
-	//UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Ability")
-		FOnActiveGameplayEffectStackChange* StackChange;
-
 	UFUNCTION(BlueprintCallable,Category = "CharAbility")
 		void AddAbility(TSubclassOf<UGameplayAbility> AbilityToAdd);
-
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 
-	/*Input Action*/
-	UFUNCTION(BlueprintImplementableEvent, Category = "InputAction")
-		void BP_DodgeLeft();
-	UFUNCTION(BlueprintImplementableEvent, Category = "InputAction")
-		void BP_DodgeRight();
 
 
 
@@ -119,17 +110,13 @@ UFUNCTION(BlueprintCallable)
 
 		/* Delegates */
 	FDelegateHandle OnEffectAddDelegateHandle;
-	FDelegateHandle OnGameplayEffectStackChangeDelegateHandle;
+	
 	
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "AddDotToUI"))
 		void BP_AddDotToUI(FBP_DotInfo DotData);
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "RemoveDotFromUI"))
 		void BP_RemvoeDotFromUI(FBP_DotInfo DotData);
-	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "StackChenge"))
-		void BP_RemoveStackFromUI(FBP_DotInfo DotData, int RemoveStack);
 	
-	UFUNCTION()
-	void TestStack2(const FGameplayEffectRemovalInfo& a);
 
 	UFUNCTION()
 	void TestStack(FActiveGameplayEffectHandle Handle, int32 NewStack, int32 PreviousStackCount);

@@ -88,5 +88,7 @@ UFUNCTION(BlueprintCallable)
 		void BP_DodgeLeft();
 	UFUNCTION(BlueprintImplementableEvent, Category = "InputAction")
 		void BP_DodgeRight();
+	UFUNCTION(BlueprintImplementableEvent, Category = "InputAction")
+		void BP_DodgeBack();
 
 };

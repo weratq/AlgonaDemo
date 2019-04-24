@@ -26,6 +26,7 @@ void ARPG_PlayerController::SetupInputComponent()
 	Super::SetupInputComponent();
 	InputComponent->BindAction("Dodge_Left", IE_DoubleClick, this, &ARPG_PlayerController::BP_DodgeLeft);
 	InputComponent->BindAction("Dodge_Right", IE_DoubleClick, this, &ARPG_PlayerController::BP_DodgeRight);
+	InputComponent->BindAction("Dodge_Back", IE_DoubleClick, this, &ARPG_PlayerController::BP_DodgeBack);
  }
 
 

@@ -10,14 +10,27 @@
 /**
  * 
  */
+USTRUCT(BlueprintType)
+struct F_GA_LevelEffectList
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilityInfo")
+		int NeedLevel = -1;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilityInfo")
+		TSubclassOf<class UGameplayEffect> GamePlayEffect;
+
+	F_GA_LevelEffects GetEffectInfo(F_GA_LevelEffectList Effect);
+};
 UCLASS()
 class ALGONADEMO_API UBaseGameplayAbility : public UGameplayAbility
 {
 	GENERATED_BODY()
 public:
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilityBase")
-		UMaterialInstance* UIMaterial;
-	
+			UMaterialInstance* UIMaterial;
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilityBase")
+			TArray<F_GA_LevelEffectList> LevelEffectList;
 		UFUNCTION(BlueprintCallable, Category = "Abilitybase")
 			FGameplayAbilityInfo GetAbilityInfo();
 		

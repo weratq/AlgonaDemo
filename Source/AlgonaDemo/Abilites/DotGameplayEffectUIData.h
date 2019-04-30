@@ -22,5 +22,6 @@ public:
 		float TimeDuration;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int Stack;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FString Description;
 };

@@ -33,11 +33,12 @@ FGameplayAbilityInfo::FGameplayAbilityInfo()
 {
 }
 
-FGameplayAbilityInfo::FGameplayAbilityInfo(float InCooldownDuration, float InCost, EAbilityCostType InCostType, UMaterialInstance * InUIMat, TSubclassOf<class UBaseGameplayAbility> InAbilityClass)
+FGameplayAbilityInfo::FGameplayAbilityInfo(float InCooldownDuration, float InCost, EAbilityCostType InCostType, UMaterialInstance * InUIMat, TSubclassOf<class UBaseGameplayAbility> InAbilityClass, TArray<F_GA_LevelEffects> LevelEffectInfo)
 	:CooldownDuration(InCooldownDuration),
 	Cost(InCost),
 	CostType(InCostType),
 	UIMat(InUIMat),
-	AbilityClass(InAbilityClass)
+	AbilityClass(InAbilityClass),
+	LevelEffectInfo(LevelEffectInfo)
 {
 }

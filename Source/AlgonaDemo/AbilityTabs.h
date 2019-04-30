@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Materials/MaterialInstance.h"
+#include "Abilites/DotGameplayEffectUIData.h"
 #include "AbilityTabs.generated.h"
 
 UENUM(BlueprintType)
@@ -14,7 +15,18 @@ enum class EAbilityCostType : uint8
 	Mana,
 	Strength
 };
+USTRUCT(BlueprintType)
+struct F_GA_LevelEffects
+{
+	GENERATED_BODY()
 
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilityInfo")
+		int LevelToUnlock;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilityInfo")
+		UMaterialInstance* Icon;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilityInfo")
+		FString Description;
+};
 
 USTRUCT(BlueprintType)
 struct FGameplayAbilityInfo
@@ -31,9 +43,10 @@ struct FGameplayAbilityInfo
 		UMaterialInstance* UIMat;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilityInfo")
 		TSubclassOf<class UBaseGameplayAbility> AbilityClass;
-	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AbilityInfo")
+		TArray<F_GA_LevelEffects> LevelEffectInfo;
 	FGameplayAbilityInfo();
-	FGameplayAbilityInfo(float InCooldownDuration, float InCost, EAbilityCostType InCostType, UMaterialInstance* InUIMat, TSubclassOf<class UBaseGameplayAbility> InAbilityClass);
+	FGameplayAbilityInfo(float InCooldownDuration, float InCost, EAbilityCostType InCostType, UMaterialInstance* InUIMat, TSubclassOf<class UBaseGameplayAbility> InAbilityClass, TArray<F_GA_LevelEffects> LevelEffectInfo);
 
 }; 
 

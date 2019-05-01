@@ -36,6 +36,19 @@ struct FServerSkillCD
 };
 
 
+USTRUCT(BlueprintType)
+struct FLernedAbility
+{
+	GENERATED_BODY()
+
+		UPROPERTY(BlueprintReadWrite)
+		int id;
+	UPROPERTY(BlueprintReadWrite)
+		int CurrLevel;
+	UPROPERTY(BlueprintReadWrite)
+		TSubclassOf<class ABaseGameplayAbility> AbilityClass;
+};
+
 
 /**
  * 
@@ -90,5 +103,15 @@ UFUNCTION(BlueprintCallable)
 		void BP_DodgeRight();
 	UFUNCTION(BlueprintImplementableEvent, Category = "InputAction")
 		void BP_DodgeBack();
+
+
+
+
+				/*PlyerAbility managment*/
+	UPROPERTY(BlueprintReadWrite, Category = "PlyerAbility")
+		TArray <FLernedAbility> PlayerSkills;
+	UFUNCTION(BlueprintCallable, Categoty = "PlayerAbility")
+		void LearnAbility(FLernedAbility Skill);
+
 
 };

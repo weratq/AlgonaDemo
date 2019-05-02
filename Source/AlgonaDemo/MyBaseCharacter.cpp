@@ -62,12 +62,13 @@ void AMyBaseCharacter::Test(void) {
 
 }
 
-void AMyBaseCharacter::AddAbility(TSubclassOf<UGameplayAbility> AbilityToAdd)
+void AMyBaseCharacter::AddAbility(TSubclassOf<UBaseGameplayAbility> AbilityToAdd,int Level)
 {
-	if (AbilitySystemComp) {
+	if (AbilitySystemComp!=nullptr) 
+	{
 		if (HasAuthority() && AbilityToAdd)
 		{
-			AbilitySystemComp->GiveAbility(FGameplayAbilitySpec(AbilityToAdd, 1, 0));
+			AbilitySystemComp->GiveAbility(FGameplayAbilitySpec(AbilityToAdd, Level, 0));
 		}
 		AbilitySystemComp->InitAbilityActorInfo(this, this);
 	}

@@ -9,6 +9,7 @@
 #include "AbilitySystemComponent.h"
 #include "Engine/Public/TimerManager.h"
 #include "AttributeSetBasic.h"
+#include "BaseGameplayAbility.h"
 #include "Abilites/DotGameplayEffectUIData.h"
 #include "MyBaseCharacter.generated.h"
 
@@ -59,7 +60,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Ability")
 		UAttributeSetBasic* CharAttribute = nullptr;
 	UFUNCTION(BlueprintCallable,Category = "CharAbility")
-		void AddAbility(TSubclassOf<UGameplayAbility> AbilityToAdd);
+		void AddAbility(TSubclassOf<UBaseGameplayAbility> AbilityToAdd,int Level = 1);
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 
 

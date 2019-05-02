@@ -17,9 +17,11 @@ void ARPG_PlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 void ARPG_PlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	
-		GetWorldTimerManager().SetTimer(CD_Timer, this, &ARPG_PlayerController::CD_TickClient, 0.1, true, 0.1);
-	
+	Character = Cast<AMyBaseCharacter>(GetPawn());
+	if (Character == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("INVALID PAWN!"));
+	}
 }
 void ARPG_PlayerController::SetupInputComponent()
 {
@@ -30,81 +32,35 @@ void ARPG_PlayerController::SetupInputComponent()
  }
 
 
-void ARPG_PlayerController::CD_TickClient(void) {
-	
-	if (SkillsOnCD.IsValidIndex(0)) {
-		for (int i = 0; i < SkillsOnCD.Num(); i++) {
-			if (SkillsOnCD[i].CurrCoolDown > 0)
+
+void ARPG_PlayerController::LearnAbility(FLernedAbility Skill)
+{
+	if (Skill.AbilityClass != nullptr&&GetPawn()!=nullptr)
+	{
+		Character->AddAbility(Skill.AbilityClass);
+		PlayerSkills.Add(Skill);
+	}
+}
+
+
+
+void ARPG_PlayerController::LevelUpAbilityByClass(TSubclassOf<UBaseGameplayAbility> AbilityClass)
+{
+	if (AbilityClass != nullptr)
+	{
+		for (int i = 0; i < PlayerSkills.Num(); ++i)
+		{
+			if (AbilityClass == PlayerSkills[i].AbilityClass)
 			{
-				SkillsOnCD[i].CurrCoolDown -= 0.1f;
-			}
-			if (SkillsOnCD[i].CurrCoolDown<=0)
-			{
-				SkillsOnCD.RemoveAt(i);
+				PlayerSkills[i].CurrLevel++;
+				Character->AddAbility(AbilityClass, PlayerSkills[i].CurrLevel);
+				return;
 			}
 		}
 	}
-}
-
-void ARPG_PlayerController::AddSkillOnCD(FSkillCoolDown SkillOnCoolDown)
-{
-	SkillOnCoolDown.CurrCoolDown = SkillOnCoolDown.CoolDown;
-	//UE_LOG(LogTemp,Warning,TEXT("CUrrCD %f" ),SkillOnCoolDown.CurrCoolDown)
-	SkillsOnCD.Add(SkillOnCoolDown);
-	Server_AddSkillOnCD(ConvertToServerSt(SkillOnCoolDown));
-
-}
-//return true if not on CD
-bool ARPG_PlayerController::CheckIsOnCD(int IDSpellBook)
-{
-	for (int i = 0; i < SkillsOnCD.Num(); i++)
-	{
-		if (SkillsOnCD[i].IdSpellBook == IDSpellBook) {
-			return false;
-		}
-	}
-	return true;
-}
-
-float ARPG_PlayerController::GetSpellCD_Left(int IDSpellBook)
-{
-	float CD = 0.f;
-	for (int i = 0; i < SkillsOnCD.Num(); i++)
-	{
-		if (SkillsOnCD[i].IdSpellBook == IDSpellBook) {
-			return SkillsOnCD[i].CurrCoolDown;
-		}
-	}
-	return CD;
+	UE_LOG(LogTemp, Warning, TEXT("Skill Level UP Fail"));
 }
 
 
-
-void ARPG_PlayerController::RepFunction(void)
-{
-	
-}
-
-void ARPG_PlayerController::Server_AddSkillOnCD_Implementation(FServerSkillCD SkillToAdd)
-{
-	SkillToAdd.StartTimeInSec = GetWorld()->TimeSeconds;
-	TServerSkillsCD.Add(SkillToAdd);
-
-}
-bool ARPG_PlayerController::Server_AddSkillOnCD_Validate(FServerSkillCD SkillToAdd) {
-	return true;
-}
-
-FServerSkillCD ARPG_PlayerController::ConvertToServerSt(FSkillCoolDown InputCD)
-{
-	FServerSkillCD ServerCD;
-	if (InputCD.IdSpellBook != -1)
-	{
-		ServerCD.CDDuration = InputCD.CoolDown;
-		ServerCD.id = InputCD.IdSpellBook;
-		return ServerCD;
-	}
-	return FServerSkillCD();
-}
 
 

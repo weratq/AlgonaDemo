@@ -71,6 +71,7 @@ void AMyBaseCharacter::AddAbility(TSubclassOf<UBaseGameplayAbility> AbilityToAdd
 			AbilitySystemComp->GiveAbility(FGameplayAbilitySpec(AbilityToAdd, Level, 0));
 		}
 		AbilitySystemComp->InitAbilityActorInfo(this, this);
+		
 	}
 }
 

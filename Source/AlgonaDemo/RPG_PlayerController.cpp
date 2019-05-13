@@ -48,15 +48,8 @@ void ARPG_PlayerController::LevelUpAbilityByClass(TSubclassOf<UBaseGameplayAbili
 {
 	if (AbilityClass != nullptr)
 	{
-		for (int i = 0; i < PlayerSkills.Num(); ++i)
-		{
-			if (AbilityClass == PlayerSkills[i].AbilityClass)
-			{
-				PlayerSkills[i].CurrLevel++;
-				Character->AddAbility(AbilityClass, PlayerSkills[i].CurrLevel);
-				return;
-			}
-		}
+		Character->AbilitySystemComp->FindAbilitySpecFromClass(AbilityClass)->Level++;
+		return;
 	}
 	UE_LOG(LogTemp, Warning, TEXT("Skill Level UP Fail"));
 }

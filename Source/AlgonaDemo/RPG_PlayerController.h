@@ -68,6 +68,7 @@ public:
 		void LearnAbility(FLernedAbility Skill);
 	UFUNCTION(BlueprintCallable)
 		void LevelUpAbilityByClass(TSubclassOf<UBaseGameplayAbility> AbilityClass);
-
+	UFUNCTION(BlueprintCallable)
+		int GetAbilityLevelByClass(TSubclassOf<UBaseGameplayAbility> AbilityClass);
 
 };

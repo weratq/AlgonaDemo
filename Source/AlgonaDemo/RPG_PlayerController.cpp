@@ -48,11 +48,31 @@ void ARPG_PlayerController::LevelUpAbilityByClass(TSubclassOf<UBaseGameplayAbili
 {
 	if (AbilityClass != nullptr)
 	{
-		Character->AbilitySystemComp->FindAbilitySpecFromClass(AbilityClass)->Level++;
-		return;
+		FGameplayAbilitySpec* CurrAbility = Character->AbilitySystemComp->FindAbilitySpecFromClass(AbilityClass);
+		if (CurrAbility != nullptr)
+		{
+			CurrAbility->Level++;
+			return;
+		}
 	}
 	UE_LOG(LogTemp, Warning, TEXT("Skill Level UP Fail"));
 }
+
+int ARPG_PlayerController::GetAbilityLevelByClass(TSubclassOf<UBaseGameplayAbility> AbilityClass)
+{
+	if (AbilityClass != nullptr)
+	{
+		FGameplayAbilitySpec* CurrAbility = Character->AbilitySystemComp->FindAbilitySpecFromClass(AbilityClass);
+		if (CurrAbility != nullptr)
+		{
+			return CurrAbility->Ability->GetAbilityLevel();
+		}
+		
+	}
+	return 0;
+}
+
+
 
 
 

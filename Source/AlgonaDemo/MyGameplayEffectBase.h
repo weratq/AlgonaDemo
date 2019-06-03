@@ -9,6 +9,15 @@
 /**
  * 
  */
+UENUM(BlueprintType) 
+enum class EDamageType : uint8
+{
+	DT_Physic UMETA(DisplayName = "Physic"),
+	DT_Magic UMETA(DisplayName = "Magic"),
+	DT_Clean UMETA(DisplayName = "Clean")
+};
+
+
 UCLASS()
 class ALGONADEMO_API UMyGameplayEffectBase : public UGameplayEffect
 {
@@ -16,5 +25,7 @@ class ALGONADEMO_API UMyGameplayEffectBase : public UGameplayEffect
 
 		UFUNCTION(BlueprintCallable, Category = "Abilitybase")
 		float GetDuration();
-	
+public:
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "GameplayEffect")
+		EDamageType DamageType;
 };

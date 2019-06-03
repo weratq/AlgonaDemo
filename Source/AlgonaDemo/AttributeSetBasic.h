@@ -6,6 +6,7 @@
 #include "AttributeSet.h"
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
+#include "MyGameplayEffectBase.h"
 #include "AttributeSetBasic.generated.h"
 
 /**
@@ -30,7 +31,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
 		FGameplayAttributeData MaxMana;
 	void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData &Data) override;
-
+	virtual bool PreGameplayEffectExecute(struct FGameplayEffectModCallbackData &Data) override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
 		FGameplayAttributeData Inteligence;
@@ -54,6 +55,8 @@ public:
 		FGameplayAttributeData MaxRage;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
 		FGameplayAttributeData WalkSpeed;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
+		FGameplayAttributeData MagicResist;
 // only for overwrite in damagecalculation
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
 		FGameplayAttributeData SpellBonusDamage;

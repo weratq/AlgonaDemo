@@ -16,7 +16,8 @@ UAttributeSetBasic::UAttributeSetBasic()
 	SpellBonusDamage(1.f),
 	Rage(0.f),
 	MaxRage(100.f),
-	WalkSpeed(600.f)
+	WalkSpeed(600.f),
+	MagicResist(1.f)
 {
 
 }
@@ -41,9 +42,12 @@ void UAttributeSetBasic::PostGameplayEffectExecute(const struct FGameplayEffectM
 			}
 		}
 	}
+	
+	 
 	//health	
 	if (Data.EvaluatedData.Attribute.GetUProperty() == FindFieldChecked<UProperty>(UAttributeSetBasic::StaticClass(), GET_MEMBER_NAME_CHECKED(UAttributeSetBasic, Health))) {
 		//UE_LOG(LogTemp, Warning, TEXT("%f"), Health.GetCurrentValue());
+
 		Health.SetCurrentValue(FMath::Clamp(Health.GetCurrentValue(), 0.f, MaxHealth.GetCurrentValue()));
 		Health.SetBaseValue(FMath::Clamp(Health.GetCurrentValue(), 0.f, MaxHealth.GetCurrentValue()));
 		OnHealthChange_del.Broadcast(Health.GetCurrentValue(), MaxHealth.GetCurrentValue());
@@ -62,11 +66,34 @@ void UAttributeSetBasic::PostGameplayEffectExecute(const struct FGameplayEffectM
 		OnRageChange_del.Broadcast(Rage.GetCurrentValue(), MaxRage.GetCurrentValue());
 	}
 	if (Data.EvaluatedData.Attribute.GetUProperty() == FindFieldChecked<UProperty>(UAttributeSetBasic::StaticClass(), GET_MEMBER_NAME_CHECKED(UAttributeSetBasic, WalkSpeed))) {
-		UE_LOG(LogTemp, Warning, TEXT("fdgd"));
+		
 		WalkSpeed.SetCurrentValue(WalkSpeed.GetCurrentValue());
 		WalkSpeed.SetBaseValue(WalkSpeed.GetCurrentValue());
 		OnSpeedChange_del.Broadcast(WalkSpeed.GetCurrentValue(), WalkSpeed.GetCurrentValue());
 	}
+}
+
+bool UAttributeSetBasic::PreGameplayEffectExecute(FGameplayEffectModCallbackData & Data)
+{
+	if (Data.EvaluatedData.Attribute.AttributeName == "Health")
+	{
+		const UMyGameplayEffectBase* CurrGE;
+		CurrGE = Cast<UMyGameplayEffectBase>(Data.EffectSpec.Def);
+		if (CurrGE) 
+		{
+			if (CurrGE->DamageType == EDamageType::DT_Physic) 
+			{
+				Data.EvaluatedData.Magnitude *= 1-(Armor.GetCurrentValue() / 1000);
+			}
+			if (CurrGE->DamageType == EDamageType::DT_Magic)
+			{
+				Data.EvaluatedData.Magnitude *= 1 - (MagicResist.GetCurrentValue() / 1000);
+			}
+			
+		}
+	}
+
+	return true;
 }
 
 void UAttributeSetBasic::ResetAttributs()

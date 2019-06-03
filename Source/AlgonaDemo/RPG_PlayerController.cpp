@@ -64,8 +64,8 @@ int ARPG_PlayerController::GetAbilityLevelByClass(TSubclassOf<UBaseGameplayAbili
 	{
 		FGameplayAbilitySpec* CurrAbility = Character->AbilitySystemComp->FindAbilitySpecFromClass(AbilityClass);
 		if (CurrAbility != nullptr)
-		{
-			return CurrAbility->Ability->GetAbilityLevel();
+		{			
+			return CurrAbility->Level;
 		}
 		
 	}

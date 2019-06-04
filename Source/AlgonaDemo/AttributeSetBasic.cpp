@@ -73,6 +73,11 @@ void UAttributeSetBasic::PostGameplayEffectExecute(const struct FGameplayEffectM
 	}
 }
 
+
+/*
+Incoming damage resist culculation.
+If we dont know damage type it will calculated like Physic damage 
+*/
 bool UAttributeSetBasic::PreGameplayEffectExecute(FGameplayEffectModCallbackData & Data)
 {
 	if (Data.EvaluatedData.Attribute.AttributeName == "Health")
@@ -81,16 +86,15 @@ bool UAttributeSetBasic::PreGameplayEffectExecute(FGameplayEffectModCallbackData
 		CurrGE = Cast<UMyGameplayEffectBase>(Data.EffectSpec.Def);
 		if (CurrGE) 
 		{
-			if (CurrGE->DamageType == EDamageType::DT_Physic) 
-			{
-				Data.EvaluatedData.Magnitude *= 1-(Armor.GetCurrentValue() / 1000);
-			}
+			//Magic type
 			if (CurrGE->DamageType == EDamageType::DT_Magic)
 			{
 				Data.EvaluatedData.Magnitude *= 1 - (MagicResist.GetCurrentValue() / 1000);
+				return true;
 			}
-			
 		}
+		//Physic type 
+	    Data.EvaluatedData.Magnitude *= 1-(Armor.GetCurrentValue() / 1000);		
 	}
 
 	return true;
